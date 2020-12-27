@@ -10,3 +10,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: fwilhe2/bump-version@wip
+      id: v
+    - run: echo ${{ steps.v.outputs.newVersion }}
