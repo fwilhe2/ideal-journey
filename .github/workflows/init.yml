@@ -25,3 +25,4 @@ jobs:
         release_name: Release ${{ steps.bump.outputs.newVersion }}
         draft: false
         prerelease: false
+        body_path: release-notes-draft.md
