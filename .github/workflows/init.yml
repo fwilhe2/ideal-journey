@@ -6,9 +6,22 @@ on:
     types: changeme
 jobs:
   build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: fwilhe2/bump-version@wip
-      id: v
-    - run: echo ${{ steps.v.outputs.newVersion }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Get Version Number
+      uses: fwilhe2/bump-version@main
+      id: bump
+    - run: echo New Version Number ${{ steps.bump.outputs.newVersion }}
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.bump.outputs.newVersion }}
+        release_name: Release ${{ steps.bump.outputs.newVersion }}
+        draft: false
+        prerelease: false
